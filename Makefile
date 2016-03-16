@@ -9,6 +9,8 @@ LEX = flex
 LFLAGS = --header-file=src/lexer.h
 MKHEADERS = makeheaders/makeheaders
 
+SOURCES = lemonaid.c node.c parser.c
+
 OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
 
 .PHONY: all headers lemon makeheaders clean dist-clean
@@ -22,7 +24,7 @@ parser.c: parser.y lemon
 	$(YACC) $(YFLAGS) $<
 
 headers: parser.c makeheaders
-	$(MKHEADERS) *.c
+	$(MKHEADERS) $(SOURCES)
 
 lemon:
 	@make -C lemon
@@ -31,7 +33,7 @@ makeheaders:
 	@make -C makeheaders
 
 style:
-	astyle -A3s4SpHk3jn "*.c" "*.h"
+	astyle -A3s4SpHk3jn "*.c"
 
 clean:
 	rm -f $(BIN) $(OBJECTS) parser.c *.h
