@@ -1,3 +1,5 @@
+BIN = lemonaid
+
 CFLAGS = -g -Wall -std=gnu11
 LDFLAGS =
 LDLIBS =
@@ -7,15 +9,20 @@ LEX = flex
 LFLAGS = --header-file=src/lexer.h
 MKHEADERS = makeheaders/makeheaders
 
-.PHONY: all lemon makeheaders clean dist-clean
+OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
 
-all: parser.h
+.PHONY: all headers lemon makeheaders clean dist-clean
+
+all: $(BIN)
+
+$(BIN): headers $(OBJECTS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(LDLIBS)
 
 parser.c: parser.y lemon
 	$(YACC) $(YFLAGS) $<
 
-parser.h: parser.c makeheaders
-	$(MKHEADERS) $<
+headers: parser.c makeheaders
+	$(MKHEADERS) *.c
 
 lemon:
 	@make -C lemon
@@ -24,10 +31,10 @@ makeheaders:
 	@make -C makeheaders
 
 style:
-	astyle -A3s4SpHk3jnr "*.c" "*.h"
+	astyle -A3s4SpHk3jn "*.c" "*.h"
 
 clean:
-	rm -f parser.c parser.hw
+	rm -f $(BIN) $(OBJECTS) parser.c *.h
 
 dist-clean:
 	@make clean
