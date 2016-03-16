@@ -1,0 +1,6 @@
+[submodule "lemon"]
+	path = lemon
+	url = https://github.com/compiler-dept/lemon.git
+[submodule "makeheaders"]
+	path = makeheaders
+	url = https://github.com/compiler-dept/makeheaders.git
