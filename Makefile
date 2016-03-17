@@ -6,7 +6,7 @@ LDLIBS =
 YACC = lemon/lemon
 YFLAGS = -m -q
 LEX = flex
-LFLAGS = --header-file=src/lexer.h
+LFLAGS = --header-file=lexer.h
 MKHEADERS = makeheaders/makeheaders
 
 SOURCES = lemonaid.c node.c parser.c
