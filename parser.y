@@ -1,4 +1,5 @@
 %include {
+    #include <stdlib.h>
     #include <assert.h>
 }
 
